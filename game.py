@@ -2,32 +2,32 @@ import mysql.connector
 from datetime import datetime
 import atexit
 
-# Connect to the MySQL database
-conn = mysql.connector.connect(
+# Connect to MySQL database
+mysql_conn = mysql.connector.connect(
     host='localhost',
     user='root',
-    password='Dust-Boy1'
+    password=input("Enter MySql password: ")
 )
-cursor = conn.cursor()
+cursor = mysql_conn.cursor()
 
 cursor.execute("CREATE DATABASE IF NOT EXISTS rock_paper_scissors")
 
 # Close the cursor and connection
 cursor.close()
-conn.close()
+mysql_conn.close()
 
-# Connect to the 'rock_paper_scissors' database
-conn = mysql.connector.connect(
+# Connect to 'rock_paper_scissors' database
+database_conn = mysql.connector.connect(
     host='localhost',
     user='root',
-    password='Dust-Boy1',
+    password=input("Enter MySql password again: "),
     database='rock_paper_scissors'
 )
 
 # Create a cursor to execute SQL commands
-cursor = conn.cursor()
+cursor = database_conn.cursor()
 
-# Create the 'scores' table if it doesn't exist
+# Create 'scores' table if it doesn't exist
 cursor.execute('''CREATE TABLE IF NOT EXISTS scores
                   (username VARCHAR(255), points INTEGER, date TIMESTAMP)''')
 
@@ -64,7 +64,7 @@ class Game:
         insert_query = "INSERT INTO scores (username, points, date) VALUES (%s, %s, %s)"
         values = (player.name, player.score, date)
         cursor.execute(insert_query, values)
-        conn.commit()
+        database_conn.commit()
         print(f"\nInserted score for {player.name}: {player.score} at {date}")
     
     def display_results(self):
@@ -81,4 +81,4 @@ class Game:
         print(f"{winner} wins the game! {loser} is a loser!")
 
 # Close the database connection when the program ends
-atexit.register(conn.close)
+atexit.register(database_conn.close)
