@@ -5,6 +5,12 @@ class Player:
         self.name = name
         self.score = 0
 
+    def get_display_name(self):
+        if self.name == "Enemy":
+            return "Enemy"
+        else:
+            return self.name
+
     def get_user_choice(self):
         valid_choices = ["rock", "paper", "scissors"]
         choice = input(f"{self.name}, enter your choice (rock/paper/scissors): ")

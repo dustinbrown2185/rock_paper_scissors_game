@@ -12,7 +12,4 @@ if __name__ == "__main__":
     while player1.score < 3 and player2.score < 3:
         game.play_round()
 
-    if player1.score == 3:
-        print(f"{player1.name} wins the game! {player2.name} is a loser!")
-    else:
-        print(f"{player2.name} wins the game! {player1.name} is a loser!")
+game.display_results()
